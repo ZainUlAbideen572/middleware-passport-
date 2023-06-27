@@ -1,18 +1,14 @@
-const jwt=require('jsonwebtoken')
-function tokenAuth(req,res,next){
-    const tokens=req.headers.authorization.split('');
-    const authtokens=tokens[1]
+function tokenauth(req,res,next){
+    const tokens=req.headers.authorization.split()
+    const authtokens=tokens[0]
     const valid=jwt.verify(authtokens,'secret')
     if(valid){
         next()
+    }else{
+        res.status(400)
+        res.send('error')
     }
-    else{
-        res.status(401)
-        res.send('unauthorised')
-        return;
-    }
-
 }
 module.exports={
-    tokenAuth
+    tokenauth
 }
